@@ -1,23 +1,23 @@
 # Author: Olin Gallet
 # Date: 6/11/2022
  
-from websites import dicewebsite as dice
+from .websites.dicewebsite import DiceWebsite
 from playwright.async_api import async_playwright
-from websites.observers.airtableasobserver import AirtableAsObserver
-from websites.observers.terminalasobserver import TerminalAsObserver
-from util import terminal 
+from .websites.observers.airtableasobserver import AirtableAsObserver
+from .websites.observers.terminalasobserver import TerminalAsObserver
+from .util import terminal 
 import asyncio
 import sys
 
 async def main(use_terminal, use_airtable):
     playwright = await async_playwright().start()
-    site = dice.DiceWebsite()
+    site = DiceWebsite()
     if use_terminal:
         site.subscribe(TerminalAsObserver())
     if use_airtable:
         site.subscribe(AirtableAsObserver())
     browser = await playwright.chromium.launch()  
-    await site.scrape(browser, dice.DiceWebsite.PYTHON_JOBS)
+    await site.scrape(browser, DiceWebsite.PYTHON_JOBS)
     await browser.close()
     await playwright.stop()
 
