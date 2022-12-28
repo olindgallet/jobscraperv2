@@ -3,7 +3,6 @@
 from .websiteinterface import WebsiteInterface
 from playwright.async_api import Browser
 from .jobdata import JobData
-import time
 
 class DiceWebsite(WebsiteInterface):
     PYTHON_JOBS = 'https://www.dice.com/jobs?q=python&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.isRemote=true&language=en&eid=S2Q_'
