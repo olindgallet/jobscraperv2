@@ -5,18 +5,18 @@ from playwright.async_api import Browser
 from .jobdata import JobData
 
 class DiceWebsite(WebsiteInterface):
-    PYTHON_JOBS = 'https://www.dice.com/jobs?q=python&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.isRemote=true&language=en&eid=S2Q_'
-    JAVA_JOBS = 'https://www.dice.com/jobs?q=java&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.isRemote=true&language=en&eid=S2Q_'
-    JAVASCRIPT_JOBS = 'https://www.dice.com/jobs?q=javascript&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.isRemote=true&language=en&eid=S2Q_'
+    PYTHON_JOBS = 'https://www.dice.com/jobs?q=python%20&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=ONE&filters.isRemote=true&language=en'
+    JAVA_JOBS = 'https://www.dice.com/jobs?q=java&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=ONE&filters.isRemote=true&language=en&eid=S2Q_'
+    JAVASCRIPT_JOBS = 'https://www.dice.com/jobs?q=javascript&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=ONE&filters.isRemote=true&language=en&eid=S2Q_'
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, url):
+        super().__init__(url)
 
-    async def scrape(self, browser:Browser, url:str):
+    async def scrape(self, browser:Browser):
         page = await browser.new_page()
         page.set_default_navigation_timeout(super()._DEFAULT_TIMEOUT)
         page.set_default_timeout(super()._DEFAULT_TIMEOUT)
-        await page.goto(url)
+        await page.goto(super().get_url())
         keep_going = True
 
         while keep_going:

@@ -13,12 +13,16 @@ class WebsiteInterface(ABC):
     #15 second default timeout
     _DEFAULT_TIMEOUT = 30000
 
-    def __init__(self):
+    def __init__(self, url):
         self._observers = []
+        self._url = url
 
     @abstractmethod
     async def scrape(self, browser:Browser):
         pass
+
+    def get_url(self):
+        return self._url
 
     def subscribe (self, observer:ObserverInterface):
         ''' Subscribes the given observer for notifications for jobs found on this site.
