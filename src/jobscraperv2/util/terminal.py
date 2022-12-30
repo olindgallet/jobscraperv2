@@ -20,3 +20,15 @@ class Terminal:
         print()
         print(colors.yellow | '  -a | send data to an Airtable defined in environment variabes')
         print(colors.yellow | '  -t | send data to the terminal')
+
+    @staticmethod
+    def display_website_error(url):
+        """Display an error message for the given url.
+
+        :param: url the url of the website
+        :type: String
+        """
+        print(colors.orchid | '[Error]')
+        print(colors.blue | url)
+        print(colors.yellow | 'could not be scraped')
+        print()

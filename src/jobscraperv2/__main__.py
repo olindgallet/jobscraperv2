@@ -6,28 +6,42 @@ from .websites.weworkremotelywebsite import WeWorkRemotelyWebsite as wwr
 from playwright.async_api import async_playwright
 from .websites.observers.airtableasobserver import AirtableAsObserver
 from .websites.observers.terminalasobserver import TerminalAsObserver
-from .util import terminal 
+from .util.terminal import Terminal
 import asyncio
 import sys
 
 async def main(use_terminal, use_airtable):
     playwright = await async_playwright().start()
-    sites = [wwr(wwr.BACK_END_PROGRAMMING_JOBS), wwr(wwr.CUSTOMER_SUPPORT_JOBS)]
+    sites = [wwr(wwr.FRONT_END_PROGRAMMING_JOBS), 
+             wwr(wwr.BACK_END_PROGRAMMING_JOBS), 
+             wwr(wwr.SYS_ADMIN_JOBS),
+             wwr(wwr.FULL_STACK_PROGRAMMING_JOBS),
+             wwr(wwr.CUSTOMER_SUPPORT_JOBS),
+             wwr(wwr.PRODUCT_JOBS),
+             dice(dice.PYTHON_JOBS),
+             dice(dice.JAVA_JOBS),
+             dice(dice.JAVASCRIPT_JOBS)]
     for site in sites:
-        if use_terminal:
-            site.subscribe(TerminalAsObserver())
-        if use_airtable:
-            site.subscribe(AirtableAsObserver())
-        browser = await playwright.chromium.launch()  
-        await site.scrape(browser)
-        await browser.close()
+        browser = None
+        try:
+            if use_terminal:
+                site.subscribe(TerminalAsObserver())
+            if use_airtable:
+                site.subscribe(AirtableAsObserver())
+            browser = await playwright.chromium.launch()  
+            await site.scrape(browser)
+            await browser.close()
+        except:
+            Terminal.display_website_error(site.get_url())
+            if browser is not None:
+                await browser.close()
     await playwright.stop()
-
+    
 if __name__ == '__main__':
     use_terminal = False
     use_airtable = False
     if '-a' not in sys.argv and '-t' not in sys.argv:
-        terminal.Terminal.display_usage_help()
+        Terminal.display_usage_help()
     else:    
         if '-a' in sys.argv:
             use_airtable = True
