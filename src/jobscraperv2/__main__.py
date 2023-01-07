@@ -42,8 +42,8 @@ async def main(use_terminal, use_airtable):
             if browser is not None:
                 await browser.close()
     await playwright.stop()
-    
-if __name__ == '__main__':
+
+def execute():
     use_terminal = False
     use_airtable = False
     if '-a' not in sys.argv and '-t' not in sys.argv:
@@ -54,3 +54,6 @@ if __name__ == '__main__':
         if '-t' in sys.argv:
             use_terminal = True
         asyncio.run(main(use_terminal, use_airtable))
+
+if __name__ == '__main__':
+    execute()

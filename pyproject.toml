@@ -33,4 +33,4 @@ dependencies = [
 ]
 
 [project.scripts]
-jobscraperv2 = "jobscraperv2.__main__:main"
+jobscraperv2 = "jobscraperv2.__main__:execute"
