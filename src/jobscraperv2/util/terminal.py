@@ -22,7 +22,7 @@ class Terminal:
         print(colors.yellow | '  -t | send data to the terminal')
 
     @staticmethod
-    def display_website_error(url):
+    def display_website_error(url, message):
         """Display an error message for the given url.
 
         :param: url the url of the website
@@ -30,5 +30,6 @@ class Terminal:
         """
         print(colors.orchid | '[Error]')
         print(colors.blue | url)
-        print(colors.yellow | 'could not be scraped')
+        print(colors.yellow | 'could not be scraped.  Additional info:')
+        print(colors.yellow | message)
         print()
