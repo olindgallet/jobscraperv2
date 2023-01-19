@@ -13,20 +13,19 @@ import sys
 
 async def main(use_terminal, use_airtable):
     playwright = await async_playwright().start()
-    sites = [indeed(indeed.NOLA_JOBS),
-             indeed(indeed.PYTHON_JOBS),
-             indeed(indeed.JAVA_JOBS),
-             indeed(indeed.JAVASCRIPT_JOBS),
-             indeed(indeed.CURRICULUM_JOBS),
-             wwr(wwr.FRONT_END_PROGRAMMING_JOBS), 
-             wwr(wwr.BACK_END_PROGRAMMING_JOBS), 
-             wwr(wwr.SYS_ADMIN_JOBS),
-             wwr(wwr.FULL_STACK_PROGRAMMING_JOBS),
-             wwr(wwr.CUSTOMER_SUPPORT_JOBS),
-             wwr(wwr.PRODUCT_JOBS),
-             dice(dice.PYTHON_JOBS),
-             dice(dice.JAVA_JOBS),
-             dice(dice.JAVASCRIPT_JOBS)]
+    #sites = [indeed(indeed.NOLA_JOBS),
+             #indeed(indeed.PYTHON_JOBS),
+             #indeed(indeed.JAVA_JOBS),
+             #indeed(indeed.JAVASCRIPT_JOBS),
+             #indeed(indeed.CURRICULUM_JOBS),
+             #wwr(wwr.FRONT_END_PROGRAMMING_JOBS), 
+             #wwr(wwr.BACK_END_PROGRAMMING_JOBS), 
+             #wwr(wwr.SYS_ADMIN_JOBS),
+             #wwr(wwr.FULL_STACK_PROGRAMMING_JOBS),
+             #wwr(wwr.CUSTOMER_SUPPORT_JOBS),
+             #wwr(wwr.PRODUCT_JOBS),
+    sites = [dice(dice.PYTHON_JOBS),
+             dice(dice.JAVA_JOBS)]
     for site in sites:
         browser = None
         try:
