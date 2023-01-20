@@ -11,6 +11,8 @@ class Jobs4GoodWebsite(WebsiteInterface):
     NEW_ORLEANS_JOBS = "https://www.learn4good.com/jobs/9787/new-orleans/la-louisiana/area/"
     WESTWEGO_JOBS = "https://www.learn4good.com/jobs/9741/westwego/la-louisiana/area/"
 
+    _MAX_PAGES_CRAWLED = 5
+
     def __init__(self, url):
         super().__init__(url)
 
@@ -34,7 +36,7 @@ class Jobs4GoodWebsite(WebsiteInterface):
             job_location = 'Westwego'
         
             
-        for j in range(await jobpages.count() - 2):
+        for j in range(self._MAX_PAGES_CRAWLED):
             joblist = page.locator('table#main_job_list').locator('tr')
             for i in range(await joblist.count() - 1):
                 try:
