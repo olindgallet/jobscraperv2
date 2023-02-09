@@ -11,12 +11,13 @@ from playwright.async_api import Browser
 from .jobdata import JobData
 
 class WeWorkRemotelyWebsite(WebsiteInterface):
-    BACK_END_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-back-end-programming-jobs'
-    FRONT_END_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-front-end-programming-jobs'
-    FULL_STACK_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-full-stack-programming-jobs'
-    SYS_ADMIN_JOBS = 'https://weworkremotely.com/categories/remote-devops-sysadmin-jobs'
-    PRODUCT_JOBS = 'https://weworkremotely.com/categories/remote-product-jobs'
-    CUSTOMER_SUPPORT_JOBS = 'https://weworkremotely.com/categories/remote-customer-support-jobs'
+    DATA_JOBS = 'https://weworkremotely.com/remote-jobs/search?term=data&button='
+    #BACK_END_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-back-end-programming-jobs'
+    #FRONT_END_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-front-end-programming-jobs'
+    #FULL_STACK_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-full-stack-programming-jobs'
+    #SYS_ADMIN_JOBS = 'https://weworkremotely.com/categories/remote-devops-sysadmin-jobs'
+    #PRODUCT_JOBS = 'https://weworkremotely.com/categories/remote-product-jobs'
+    #CUSTOMER_SUPPORT_JOBS = 'https://weworkremotely.com/categories/remote-customer-support-jobs'
 
     def __init__(self, url):
         super().__init__(url)
