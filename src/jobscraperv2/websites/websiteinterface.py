@@ -10,7 +10,7 @@ from .observers.observerinterface import ObserverInterface
 from .jobdata import JobData
 
 class WebsiteInterface(ABC):
-    #15 second default timeout
+    #30 second default timeout
     _DEFAULT_TIMEOUT = 30000
 
     def __init__(self, url):

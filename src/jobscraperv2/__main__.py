@@ -1,11 +1,11 @@
 # Author: Olin Gallet
 # Date: 6/11/2022
  
-from .websites.dicewebsite import DiceWebsite as dice
 from .websites.weworkremotelywebsite import WeWorkRemotelyWebsite as wwr
 from .websites.indeedwebsite import IndeedWebsite as indeed
+from .websites.hitmarkerwebsite import HitMarkerWebsite as hitma
+from .websites.dicewebsite import DiceWebsite as dice
 from playwright.async_api import async_playwright
-from .websites.jobs4goodwebsite import Jobs4GoodWebsite as jobs4good
 from .websites.observers.airtableasobserver import AirtableAsObserver
 from .websites.observers.terminalasobserver import TerminalAsObserver
 from .util.terminal import Terminal
@@ -18,7 +18,9 @@ async def main(use_terminal, use_airtable):
     #         indeed(indeed.BUSINESS_ANALYST_JOBS),
     #         indeed(indeed.MARKET_ANALYST_JOBS),
     #         indeed(indeed.FINANCIAL_ANALYST_JOBS),
-    sites = [wwr(wwr.DATA_JOBS)]
+    #sites = [wwr(wwr.DATA_JOBS)]
+    #sites = [hitma(hitma.DATA_JOBS)]
+    sites = [dice(dice.DATA_ANALYST_JOBS)]
     for site in sites:
         browser = None
         try:
@@ -26,7 +28,7 @@ async def main(use_terminal, use_airtable):
                 site.subscribe(TerminalAsObserver())
             if use_airtable:
                 site.subscribe(AirtableAsObserver())
-            browser = await playwright.firefox.launch()  
+            browser = await playwright.chromium.launch()  
             await site.scrape(browser)
             await browser.close()
         except Exception as e:
