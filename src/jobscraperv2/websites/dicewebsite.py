@@ -40,8 +40,8 @@ class DiceWebsite(WebsiteInterface):
                 except Exception as ex:
                     print(ex)
             next = page.get_by_text('»')
-            if 'disabled' not in next.get_attribute('class'):
-                next.click()
+            if 'disabled' not in await next.get_attribute('class'):
+                await next.click()
             else:
                 keep_going = False
         await page.close()
