@@ -9,6 +9,8 @@ class DiceWebsite(WebsiteInterface):
     #JAVA_JOBS = 'https://www.dice.com/jobs?q=java&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=ONE&filters.isRemote=true&language=en&eid=S2Q_'
     #JAVASCRIPT_JOBS = 'https://www.dice.com/jobs?q=javascript&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=ONE&filters.isRemote=true&language=en&eid=S2Q_'
     DATA_ANALYST_JOBS = 'https://www.dice.com/jobs?q=data%20analyst&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=THREE&filters.employmentType=FULLTIME&filters.isRemote=true&language=en'
+    DATA_SCIENTIST_JOBS = 'https://www.dice.com/jobs?q=data%20scientist&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=THREE&filters.employmentType=FULLTIME&filters.isRemote=true&language=en'
+
 
     def __init__(self, url):
         super().__init__(url)
@@ -40,7 +42,7 @@ class DiceWebsite(WebsiteInterface):
                 except Exception as ex:
                     print(ex)
             next = page.get_by_text('»')
-            if 'disabled' not in await next.get_attribute('class'):
+            if 'disabled' not in await next.get_attribute('class') and i < 3:
                 await next.click()
             else:
                 keep_going = False
