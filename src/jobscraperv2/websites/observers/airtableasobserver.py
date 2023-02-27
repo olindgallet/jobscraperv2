@@ -16,9 +16,11 @@ from .observerinterface import ObserverInterface
 from ..jobdata import JobData
 import os
 import time
+from dotenv import load_dotenv, find_dotenv
 
 class AirtableAsObserver(ObserverInterface):
     def __init__(self):
+        load_dotenv(find_dotenv())
         if 'AIRTABLE_BASE_KEY' in os.environ and \
            'AIRTABLE_TABLE_NAME' in os.environ and \
            'AIRTABLE_API_KEY' in os.environ:

@@ -20,7 +20,7 @@ async def main(use_terminal, use_airtable):
     #         indeed(indeed.FINANCIAL_ANALYST_JOBS),
     #sites = [wwr(wwr.DATA_JOBS)]
     #sites = [hitma(hitma.DATA_JOBS)]
-    sites = [dice(dice.DATA_ANALYST_JOBS)]
+    #sites = [dice(dice.DATA_ANALYST_JOBS)]
     for site in sites:
         browser = None
         try:
