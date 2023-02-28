@@ -34,6 +34,7 @@ class HimalayasWebsite(WebsiteInterface):
                 job_description = job_description[:99999] + (job_description[99999:] and '...')
                 await subpage.close()
 
+                print(job_description)
                 job_data = JobData(job_company, job_title, job_description, job_link)
                 await super().notify(job_data)
             except Exception as ex:

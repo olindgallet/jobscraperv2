@@ -35,7 +35,7 @@ class WeWorkRemotelyWebsite(WebsiteInterface):
                 job_subpage = requests.get(job_link)
                 subpage_soup = BeautifulSoup(job_subpage.text, 'html.parser')
                 subpage_listing = subpage_soup.find('div',{'id':'job-listing-show-container'})
-                job_description = subpage_listing.text[:3000] + (subpage_listing.text[3000:] and '...')
+                job_description = subpage_listing.text[:99999] + (subpage_listing.text[99999:] and '...')
                 
                 job_data = JobData(job_company, job_title, job_description, job_link)
                 await super().notify(job_data)

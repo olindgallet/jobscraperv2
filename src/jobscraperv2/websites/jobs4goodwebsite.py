@@ -50,7 +50,7 @@ class Jobs4GoodWebsite(WebsiteInterface):
                     await subpage.goto(job_link)
                     job_description = subpage.locator('div#ds')
                     job_description = await job_description.inner_text()
-                    job_description = job_description[:3000] + (job_description[3000:] and '...')
+                    job_description = job_description[:99999] + (job_description[99999:] and '...')
                     await subpage.close()
                     job_data = JobData(job_company, job_title, job_description, job_link)
                     await super().notify(job_data)
