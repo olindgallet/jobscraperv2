@@ -5,6 +5,7 @@ from .websites.weworkremotelywebsite import WeWorkRemotelyWebsite as wwr
 from .websites.indeedwebsite import IndeedWebsite as indeed
 from .websites.hitmarkerwebsite import HitMarkerWebsite as hitma
 from .websites.dicewebsite import DiceWebsite as dice
+from .websites.himalayaswebsite import HimalayasWebsite as himalayas
 from playwright.async_api import async_playwright
 from .websites.observers.airtableasobserver import AirtableAsObserver
 from .websites.observers.terminalasobserver import TerminalAsObserver
@@ -21,6 +22,7 @@ async def main(use_terminal, use_airtable):
     #sites = [wwr(wwr.DATA_JOBS)]
     #sites = [hitma(hitma.DATA_JOBS)]
     #sites = [dice(dice.DATA_ANALYST_JOBS)]
+    sites = [himalayas(himalayas.DATA_ANALYSIS)]
     for site in sites:
         browser = None
         try:
