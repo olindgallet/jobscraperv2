@@ -1,11 +1,14 @@
 # Author: Olin Gallet
-# Date: 9/2/2023
+# Date: 28/2/2023
 from .websiteinterface import WebsiteInterface
 from playwright.async_api import Browser
 from .jobdata import JobData
 
 class HimalayasWebsite(WebsiteInterface):
-    DATA_ANALYSIS = 'https://himalayas.app/jobs/data-analysis'
+    DATA_ANALYST_JOBS = 'https://himalayas.app/jobs/data-analyst'
+    DATA_SCIENTIST_JOBS = 'https://himalayas.app/jobs/data-scientist'
+    BUSINESS_ANALYST_JOBS = 'https://himalayas.app/jobs/business-analyst'
+    ANALYTICS_JOBS = 'https://himalayas.app/jobs/analytics'
 
     _BASE_URL = 'https://himalayas.app'
 
@@ -34,7 +37,6 @@ class HimalayasWebsite(WebsiteInterface):
                 job_description = job_description[:99999] + (job_description[99999:] and '...')
                 await subpage.close()
 
-                print(job_description)
                 job_data = JobData(job_company, job_title, job_description, job_link)
                 await super().notify(job_data)
             except Exception as ex:

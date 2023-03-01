@@ -6,6 +6,7 @@ from .websites.indeedwebsite import IndeedWebsite as indeed
 from .websites.hitmarkerwebsite import HitMarkerWebsite as hitma
 from .websites.dicewebsite import DiceWebsite as dice
 from .websites.himalayaswebsite import HimalayasWebsite as himalayas
+from .websites.nowhiteboardwebsite import NoWhiteboardWebsite as nowb
 from playwright.async_api import async_playwright
 from .websites.observers.airtableasobserver import AirtableAsObserver
 from .websites.observers.terminalasobserver import TerminalAsObserver
@@ -15,14 +16,22 @@ import sys
 
 async def main(use_terminal, use_airtable):
     playwright = await async_playwright().start()
-    #sites = [indeed(indeed.DATA_ANALYST_JOBS),
-    #         indeed(indeed.BUSINESS_ANALYST_JOBS),
-    #         indeed(indeed.MARKET_ANALYST_JOBS),
-    #         indeed(indeed.FINANCIAL_ANALYST_JOBS),
-    #sites = [wwr(wwr.DATA_JOBS)]
-    #sites = [hitma(hitma.DATA_JOBS)]
-    #sites = [dice(dice.DATA_ANALYST_JOBS)]
-    sites = [himalayas(himalayas.DATA_ANALYSIS)]
+    sites = [indeed(indeed.DATA_ANALYST_JOBS),
+             indeed(indeed.BUSINESS_ANALYST_JOBS),
+             indeed(indeed.DATA_SCIENTIST_JOBS),
+             indeed(indeed.ANALYTICS_JOBS)]
+             #dice(dice.DATA_ANALYST_JOBS),
+             #dice(dice.BUSINESS_ANALYST_JOBS),
+             #dice(dice.DATA_SCIENTIST_JOBS),
+             #dice(dice.ANALYTICS_JOBS),
+             #wwr(wwr.DATA_JOBS),
+             #hitma(hitma.DATA_JOBS),
+             #hitma(hitma.ANALYST_JOBS),
+             #himalayas(himalayas.DATA_ANALYST_JOBS),
+             #himalayas(himalayas.BUSINESS_ANALYST_JOBS),
+             #himalayas(himalayas.DATA_SCIENTIST_JOBS),
+             #himalayas(himalayas.ANALYTICS_JOBS),
+             #nowb(nowb.DATA_JOBS)]
     for site in sites:
         browser = None
         try:
@@ -30,7 +39,7 @@ async def main(use_terminal, use_airtable):
                 site.subscribe(TerminalAsObserver())
             if use_airtable:
                 site.subscribe(AirtableAsObserver())
-            browser = await playwright.chromium.launch()  
+            browser = await playwright.firefox.launch()  
             await site.scrape(browser)
             await browser.close()
         except Exception as e:

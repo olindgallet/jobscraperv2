@@ -11,7 +11,7 @@ class DiceWebsite(WebsiteInterface):
     DATA_ANALYST_JOBS = 'https://www.dice.com/jobs?q=data%20analyst&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=THREE&filters.employmentType=FULLTIME&filters.isRemote=true&language=en'
     DATA_SCIENTIST_JOBS = 'https://www.dice.com/jobs?q=data%20scientist&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=THREE&filters.employmentType=FULLTIME&filters.isRemote=true&language=en'
     BUSINESS_ANALYST_JOBS = 'https://www.dice.com/jobs?q=business%20analyst&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=THREE&filters.employmentType=FULLTIME&filters.isRemote=true&language=en'
-
+    ANALYTICS_JOBS = 'https://www.dice.com/jobs?q=analytics&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=100&filters.postedDate=THREE&filters.employmentType=FULLTIME&filters.isRemote=true&language=en'
     def __init__(self, url):
         super().__init__(url)
 

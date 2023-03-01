@@ -7,8 +7,8 @@ from .jobdata import JobData
 class IndeedWebsite(WebsiteInterface):
     DATA_ANALYST_JOBS = 'https://www.indeed.com/jobs?q=data+analyst&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
     BUSINESS_ANALYST_JOBS = 'https://www.indeed.com/jobs?q=business+analyst&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
-    MARKET_ANALYST_JOBS = 'https://www.indeed.com/jobs?q=market+analyst&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
-    FINANCIAL_ANALYST_JOBS = 'https://www.indeed.com/jobs?q=financial+analyst&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
+    DATA_SCIENTIST_JOBS = 'https://www.indeed.com/jobs?q=data+scientist&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
+    ANALYTICS_JOBS = 'https://www.indeed.com/jobs?q=analytics&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
     #PYTHON_JOBS = 'https://www.indeed.com/jobs?q=python+developer&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
     #JAVA_JOBS = 'https://www.indeed.com/jobs?q=java+developer&l=remote&explvl=entry_level&sort=date&fromage=1&limit=50'
     #JAVASCRIPT_JOBS = 'https://www.indeed.com/jobs?q=javascript+developer&l=remote&explvl=entry_level&sort=date&fromage=1&limit=50'
