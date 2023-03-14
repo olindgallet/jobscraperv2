@@ -25,32 +25,28 @@ class IndeedWebsite(WebsiteInterface):
         await page.goto(super().get_url())
         
         next_pages = page.locator('//nav[@role="navigation"]/div/a')
-        for i in range(await next_pages.count() - 1):
-            tables = page.locator('//table[contains(@class, "jobCard_mainContent")]')
-            for j in range(await tables.count() - 1):
-                try:
-                    table = tables.nth(j)
-                    job_company = await table.locator('xpath=tbody/tr/td/div/span[@class="companyName"]').inner_text()
-                    job_company = job_company + ' @ ' + await table.locator('xpath=tbody/tr/td/div/div[@class="companyLocation"]').inner_text()
-                    jlink = table.locator('xpath=tbody/tr/td/div/h2/a[starts-with(@class, "jcs-JobTitle")]')
-                    job_title = await jlink.inner_text()
-                    job_link = 'https://www.indeed.com' + await jlink.get_attribute('href')
+        tables = page.locator('//table[contains(@class, "jobCard_mainContent")]')
+        for i in range(await tables.count() - 1):
+            try:
+                table = tables.nth(i)
+                job_company = await table.locator('xpath=tbody/tr/td/div/span[@class="companyName"]').inner_text()
+                job_company = job_company + ' @ ' + await table.locator('xpath=tbody/tr/td/div/div[@class="companyLocation"]').inner_text()
+                jlink = table.locator('xpath=tbody/tr/td/div/h2/a[starts-with(@class, "jcs-JobTitle")]')
+                job_title = await jlink.inner_text()
+                job_link = 'https://www.indeed.com' + await jlink.get_attribute('href')
 
-                    subpage = await browser.new_page()
-                    subpage.set_default_navigation_timeout(super()._DEFAULT_TIMEOUT)
-                    subpage.set_default_timeout(super()._DEFAULT_TIMEOUT)
-                    await subpage.goto(job_link)
+                subpage = await browser.new_page()
+                subpage.set_default_navigation_timeout(super()._DEFAULT_TIMEOUT)
+                subpage.set_default_timeout(super()._DEFAULT_TIMEOUT)
+                await subpage.goto(job_link)
 
-                    job_description = subpage.locator('div#jobDescriptionText')
-                    job_description = await job_description.inner_text()
-                    job_description = job_description[:99999] + (job_description[99999:] and '...')
-                    await subpage.close()
+                job_description = subpage.locator('div#jobDescriptionText')
+                job_description = await job_description.inner_text()
+                job_description = job_description[:99999] + (job_description[99999:] and '...')
+                await subpage.close()
 
-                    job_data = JobData(job_company, job_title, job_description, job_link)
-                    await super().notify(job_data)
-                except Exception as ex:
-                    print(ex)
-
-                if i < await next_pages.count():
-                    await next_pages.nth(i + 1).click()
+                job_data = JobData(job_company, job_title, job_description, job_link)
+                await super().notify(job_data)
+            except Exception as ex:
+                print(ex)
         await page.close()
