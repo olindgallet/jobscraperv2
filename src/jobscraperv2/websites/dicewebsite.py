@@ -19,33 +19,26 @@ class DiceWebsite(WebsiteInterface):
         page = await browser.new_page()
         await page.goto(super().get_url(), timeout=0)
         await page.wait_for_selector('div#searchDisplay-div')
-        keep_going = True
-        while keep_going:
-            joblist = page.locator('h5')
-            for i in range(await joblist.count() - 1):
-                try:
-                    if 'Dice' not in await joblist.nth(i).inner_text() and \
-                    await joblist.nth(i).locator('xpath=a').count() > 0 and \
-                    await joblist.nth(i).locator('xpath=parent::div/div/a').count() > 0:                      
-                        job_link = await joblist.nth(i).locator('a').get_attribute('href')
-                        job_title = await joblist.nth(i).inner_text()
-                        job_company = await joblist.nth(i).locator('xpath=parent::div/div/a').inner_text()
+        joblist = page.locator('h5')
+        for i in range(await joblist.count() - 1):
+            try:
+                if 'Dice' not in await joblist.nth(i).inner_text() and \
+                await joblist.nth(i).locator('xpath=a').count() > 0 and \
+                await joblist.nth(i).locator('xpath=parent::div/div/a').count() > 0:                      
+                    job_link = await joblist.nth(i).locator('a').get_attribute('href')
+                    job_title = await joblist.nth(i).inner_text()
+                    job_company = await joblist.nth(i).locator('xpath=parent::div/div/a').inner_text()
 
-                        subpage = await browser.new_page()
-                        await subpage.goto(job_link, timeout=0)
-                        job_description = subpage.locator('div#jobDescription')
-                        job_description = await job_description.inner_text()
-                        job_description = job_description[:99999] + (job_description[99999:] and '...')
-                        await subpage.close()
-                        job_data = JobData(job_company, job_title, job_description, job_link)
-                        await super().notify(job_data)
-                except Exception as ex:
-                    print(ex)
-            next = page.get_by_text('»')
-            if 'disabled' not in await next.get_attribute('class') and i < 3:
-                await next.click()
-            else:
-                keep_going = False
+                    subpage = await browser.new_page()
+                    await subpage.goto(job_link, timeout=0)
+                    job_description = subpage.locator('div#jobDescription')
+                    job_description = await job_description.inner_text()
+                    job_description = job_description[:99999] + (job_description[99999:] and '...')
+                    await subpage.close()
+                    job_data = JobData(job_company, job_title, job_description, job_link)
+                    await super().notify(job_data)
+            except Exception as ex:
+                print(ex)
         await page.close()
     
         
