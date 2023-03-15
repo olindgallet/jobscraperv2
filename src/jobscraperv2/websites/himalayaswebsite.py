@@ -8,6 +8,7 @@ class HimalayasWebsite(WebsiteInterface):
     DATA_ANALYST_JOBS = 'https://himalayas.app/jobs/data-analyst'
     DATA_SCIENTIST_JOBS = 'https://himalayas.app/jobs/data-scientist'
     BUSINESS_ANALYST_JOBS = 'https://himalayas.app/jobs/business-analyst'
+    DATA_ENGINEER_JOBS = 'https://himalayas.app/jobs/data-engineer'
     ANALYTICS_JOBS = 'https://himalayas.app/jobs/analytics'
 
     _BASE_URL = 'https://himalayas.app'

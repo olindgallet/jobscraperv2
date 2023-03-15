@@ -9,6 +9,7 @@ class IndeedWebsite(WebsiteInterface):
     BUSINESS_ANALYST_JOBS = 'https://www.indeed.com/jobs?q=business+analyst&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
     DATA_SCIENTIST_JOBS = 'https://www.indeed.com/jobs?q=data+scientist&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
     ANALYTICS_JOBS = 'https://www.indeed.com/jobs?q=analytics&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
+    DATA_ENGINEER_JOBS = 'https://www.indeed.com/jobs?q=data+engineer&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
     #PYTHON_JOBS = 'https://www.indeed.com/jobs?q=python+developer&l=remote&explvl=entry_level&sort=date&limit=50&fromage=1'
     #JAVA_JOBS = 'https://www.indeed.com/jobs?q=java+developer&l=remote&explvl=entry_level&sort=date&fromage=1&limit=50'
     #JAVASCRIPT_JOBS = 'https://www.indeed.com/jobs?q=javascript+developer&l=remote&explvl=entry_level&sort=date&fromage=1&limit=50'
