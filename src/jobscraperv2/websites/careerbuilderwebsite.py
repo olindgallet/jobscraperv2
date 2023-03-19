@@ -17,8 +17,8 @@ class CareerBuilderWebsite(WebsiteInterface):
     REL_ANALYTICS_JOBS = 'https://www.careerbuilder.com/jobs?cb_apply=false&cb_workhome=true&emp=&keywords=Analytics&location=Work+from+Home%2FRemote&pay=&posted=1&sort=relevance_desc'
     DAT_ANALYTICS_JOBS = 'https://www.careerbuilder.com/jobs?cb_apply=false&cb_workhome=true&emp=&keywords=Analytics&location=Work+from+Home%2FRemote&pay=&posted=1&sort=date_desc'
     
-    REL_DATA_SCIENTIST_JOBS = 'https://www.careerbuilder.com/jobs?cb_apply=false&cb_workhome=true&emp=&keywords=Data+Scientist&location=Work+from+Home%2FRemote&pay=&posted=1&sort=relevance_desc'
-    DAT_DATA_SCIENTIST_JOBS = 'https://www.careerbuilder.com/jobs?cb_apply=false&cb_workhome=true&emp=&keywords=Data+Scientist&location=Work+from+Home%2FRemote&pay=&posted=1&sort=date_desc'
+    REL_DATA_ENGINEER_JOBS = 'https://www.careerbuilder.com/jobs?cb_apply=false&cb_workhome=true&emp=&keywords=Data+Engineer&location=Work+from+Home%2FRemote&pay=&posted=1&sort=relevance_desc'
+    DAT_DATA_ENGINEER_JOBS = 'https://www.careerbuilder.com/jobs?cb_apply=false&cb_workhome=true&emp=&keywords=Data+Engineer&location=Work+from+Home%2FRemote&pay=&posted=1&sort=date_desc'
     
     _BASE_URL = 'https://www.careerbuilder.com'
     
