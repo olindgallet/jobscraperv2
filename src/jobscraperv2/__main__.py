@@ -7,6 +7,9 @@ from .websites.hitmarkerwebsite import HitMarkerWebsite as hitma
 from .websites.dicewebsite import DiceWebsite as dice
 from .websites.himalayaswebsite import HimalayasWebsite as himalayas
 from .websites.nowhiteboardwebsite import NoWhiteboardWebsite as nowb
+from .websites.careerbuilderwebsite import CareerBuilderWebsite as cb
+from .websites.ziprecruiterwebsite import ZipRecruiterWebsite as zip
+from .websites.monsterwebsite import MonsterWebsite as monster
 from playwright.async_api import async_playwright
 from .websites.observers.airtableasobserver import AirtableAsObserver
 from .websites.observers.terminalasobserver import TerminalAsObserver
@@ -20,12 +23,34 @@ async def main(use_terminal, use_airtable):
              indeed(indeed.BUSINESS_ANALYST_JOBS),
              indeed(indeed.DATA_ANALYST_JOBS),
              indeed(indeed.DATA_SCIENTIST_JOBS),
+             indeed(indeed.DATA_ENGINEER_JOBS),
              wwr(wwr.DATA_JOBS),
              himalayas(himalayas.DATA_ANALYST_JOBS),
              himalayas(himalayas.BUSINESS_ANALYST_JOBS),
              himalayas(himalayas.DATA_SCIENTIST_JOBS),
              himalayas(himalayas.ANALYTICS_JOBS),
-             nowb(nowb.DATA_JOBS)]
+             himalayas(himalayas.DATA_ENGINEER_JOBS),
+             nowb(nowb.DATA_JOBS),
+             cb(cb.DAT_DATA_ANALYST_JOBS),
+             cb(cb.DAT_BUSINESS_ANALYST_JOBS),
+             cb(cb.DAT_ANALYTICS_JOBS),
+             cb(cb.DAT_DATA_SCIENTIST_JOBS),
+             cb(cb.DAT_DATA_ENGINEER_JOBS),
+             cb(cb.REL_DATA_ANALYST_JOBS),
+             cb(cb.REL_BUSINESS_ANALYST_JOBS),
+             cb(cb.REL_ANALYTICS_JOBS),
+             cb(cb.REL_DATA_SCIENTIST_JOBS),
+             cb(cb.REL_DATA_ENGINEER_JOBS),
+             zip(zip.DATA_ENGINEER_JOBS),
+             zip(zip.DATA_SCIENTIST_JOBS),
+             zip(zip.ANALYTICS_JOBS),
+             zip(zip.DATA_ANALYST_JOBS),
+             zip(zip.BUSINESS_ANALYST_JOBS),
+             monster(monster.DATA_ANALYST_JOBS),
+             monster(monster.ANALYTICS_JOBS),
+             monster(monster.BUSINESS_ANALYST_JOBS),
+             monster(monster.DATA_ENGINEER_JOBS),
+             monster(monster.DATA_SCIENTIST_JOBS)]
     for site in sites:
         browser = None
         try:
