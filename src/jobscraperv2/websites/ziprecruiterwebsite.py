@@ -1,9 +1,10 @@
 # Author: Olin Gallet
-# Date: 5/11/2022
+# Date: 20/3/2022
 from .websiteinterface import WebsiteInterface
 from playwright.async_api import Browser
 from .jobdata import JobData
 import os
+from dotenv import load_dotenv, find_dotenv
 
 class ZipRecruiterWebsite(WebsiteInterface):
     DATA_ANALYST_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Data+Analyst&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
@@ -17,12 +18,13 @@ class ZipRecruiterWebsite(WebsiteInterface):
         super().__init__(url)
 
     async def scrape(self, browser:Browser):
+        load_dotenv(find_dotenv())
         page = await browser.new_page()
-
-        await page.goto(self.LOGIN_PAGE)
+        await page.goto(self.LOGIN_PAGE, timeout=0)
         await page.locator('input#email').fill(os.environ['ZIP_RECRUITER_LOGIN'])
         await page.locator('input#password').fill(os.environ['ZIP_RECRUITER_PASSWORD'])
         await page.locator('button#submit_button').click()
+        await page.wait_for_selector('nav[class="my_jobs_nav"]')
 
         await page.goto(super().get_url(), timeout=0)
 
