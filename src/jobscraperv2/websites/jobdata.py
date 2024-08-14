@@ -2,10 +2,10 @@
 # Date: 7/11/2022
 #
 # JobData represents a typical job posting found on a job search engine.  It contains
-# information about the company, tittle, description, and link to the post.
+# information about the company, title, description, link, and location to the post.
 
 class JobData:
-    def __init__(self, company:str, title:str, description:str, link:str):
+    def __init__(self, company:str, title:str, description:str, link:str, location:str):
         ''' Constructs a new JobData
 
         :param: company the name of the job company
@@ -19,11 +19,15 @@ class JobData:
 
         :param link the job's link
         :type: str
+
+        :param link the job's location
+        :type: str
         '''
         self._company = company
         self._title = title
         self._description = description
         self._link = link
+        self._location = location
 
     def get_company(self) -> str:
         ''' Gets the job's company name.
@@ -56,3 +60,11 @@ class JobData:
         :rtype: str
         '''
         return self._link
+    
+    def get_location(self) -> str:
+        ''' Gets the job's location.
+
+        :return: the job's location
+        :rtype: str
+        '''
+        return self._location
