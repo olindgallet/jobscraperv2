@@ -12,6 +12,7 @@ from .jobdata import JobData
 
 class WeWorkRemotelyWebsite(WebsiteInterface):
     DATA_JOBS = 'https://weworkremotely.com/remote-jobs/search?term=data&button='
+    ARTIFICIAL_INTELLIGENCE_JOBS = 'https://weworkremotely.com/remote-jobs/search?search_uuid=&term=AI&sort=any_time&region%5B%5D=1'
     #BACK_END_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-back-end-programming-jobs'
     #FRONT_END_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-front-end-programming-jobs'
     #FULL_STACK_PROGRAMMING_JOBS = 'https://weworkremotely.com/categories/remote-full-stack-programming-jobs'
@@ -31,12 +32,13 @@ class WeWorkRemotelyWebsite(WebsiteInterface):
                 job_title = link.find('span', {'class': 'title'}).text
                 job_company = link.find('span', {'class': 'region company'}).text + ' @ ' + link.find('span', {'class': 'company'}).text
                 job_link = 'https://weworkremotely.com' + link.get('href')
+                job_location = 'Remote'
 
                 job_subpage = requests.get(job_link)
                 subpage_soup = BeautifulSoup(job_subpage.text, 'html.parser')
                 subpage_listing = subpage_soup.find('div',{'id':'job-listing-show-container'})
                 job_description = subpage_listing.text[:99999] + (subpage_listing.text[99999:] and '...')
                 
-                job_data = JobData(job_company, job_title, job_description, job_link)
+                job_data = JobData(job_company, job_title, job_description, job_link, job_location)
                 await super().notify(job_data)
         resp.close()

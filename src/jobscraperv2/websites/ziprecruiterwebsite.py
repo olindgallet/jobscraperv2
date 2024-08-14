@@ -5,13 +5,20 @@ from playwright.async_api import Browser
 from .jobdata import JobData
 import os
 from dotenv import load_dotenv, find_dotenv
+import time
+import json
+import re
 
 class ZipRecruiterWebsite(WebsiteInterface):
-    DATA_ANALYST_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Data+Analyst&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
-    BUSINESS_ANALYST_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Business+Analyst&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
-    ANALYTICS_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=data+analytics&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
-    DATA_SCIENTIST_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Data+Scientist&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
-    DATA_ENGINEER_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Data+Engineer&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
+    #DATA_ANALYST_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Data+Analyst&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
+    #BUSINESS_ANALYST_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Business+Analyst&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
+    #ANALYTICS_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=data+analytics&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
+    #DATA_SCIENTIST_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Data+Scientist&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
+    #DATA_ENGINEER_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Junior+Data+Engineer&location=Remote+%28USA%29&refine_by_location_type=only_remote&radius=25&days=1'
+    ARTIFICIAL_INTELLIGENCE_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Artificial+Intelligence&location=Boston+%28USA%29&radius=25&days=7'
+    MACHINE_LEARNING_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Machine+Learning&location=Boston+%28USA%29&radius=25&days=7'
+    REAL_ESTATE_JOBS = 'https://www.ziprecruiter.com/jobs-search?search=Real+Estate&location=Boston+%28USA%29&radius=25&days=7'
+
 
     LOGIN_PAGE = 'https://www.ziprecruiter.com/authn/login'             
     def __init__(self, url):
@@ -20,39 +27,48 @@ class ZipRecruiterWebsite(WebsiteInterface):
     async def scrape(self, browser:Browser):
         load_dotenv(find_dotenv())
         page = await browser.new_page()
-        await page.goto(self.LOGIN_PAGE, timeout=0)
+        await page.goto(self.LOGIN_PAGE, wait_until="networkidle")
         await page.locator('input#email').fill(os.environ['ZIP_RECRUITER_LOGIN'])
         await page.locator('input#password').fill(os.environ['ZIP_RECRUITER_PASSWORD'])
         await page.locator('button#submit_button').click()
-        await page.wait_for_selector('nav[class="my_jobs_nav"]')
+        time.sleep(2)
 
         await page.goto(super().get_url(), timeout=0)
+        time.sleep(4)
 
-        await page.wait_for_selector('div#job_postings_skip')
-        joblist = page.locator('div#job_postings_skip').locator('article')
+        current_page = 1
+        while True:
 
-        for i in range(await joblist.count() - 1):
-            try:
-                job_title = await joblist.nth(i).locator('a[class="job_link"]').inner_text()
-                job_link = await joblist.nth(i).locator('a[class="job_link"]').get_attribute('href')
-                job_company = await joblist.nth(i).locator('a[class="company_name"]').inner_text()
-                
-                subpage = await browser.new_page()
-                await subpage.goto(job_link, timeout=0)
-                page.set_default_timeout(5000)
-                job_description = "Job data unable to be scraped."
-                try:
-                    job_description = subpage.locator('div[class="jobDescriptionSection"]')
-                    job_description = await job_description.inner_text()
-                    job_description = job_description[:99999] + (job_description[99999:] and '...')
-                except Exception as ex:
-                    job_description = "Job data unable to be scraped."
-                await subpage.close()
+            await page.wait_for_selector('div.site_content')
+            time.sleep(2)
 
-                job_data = JobData(job_company, job_title, job_description, job_link)
-                await super().notify(job_data)
-            except Exception as ex:
-                print(ex)
-        await page.close()
-    
-        
+            html_content = await page.content()
+            matches = re.findall(r'<script id="js_variables" type="application/json"[^>]*>(.*?)</script>', html_content, re.DOTALL)
+
+            if matches:
+                # Assuming the first match is the one we're interested in
+                json_data = json.loads(matches[0])
+                # Navigate the JSON object to extract job titles
+                job_list = json_data.get('jobList', [])
+                for job in job_list:
+                    print("job: ", job)
+                    job_title = job.get('Title')
+                    job_company = job.get('OrgName')
+                    job_link = job.get('JobURL')
+                    job_location = job.get('City')
+                    job_description = 'job_description'
+                    job_data = JobData(job_company, job_title, job_description, job_link, job_location)
+                    await super().notify(job_data)
+                    
+            else:
+                print("No job data found in the script tags")
+
+            # Try to find the next page button and click it if present
+            next_page_button = await page.query_selector('a[title="Next Page"]')
+            if next_page_button:
+                await next_page_button.click()
+                print(f"Moving to page {current_page + 1}")
+                current_page += 1
+                await page.wait_for_load_state('networkidle')  # Ensure the next page has loaded
+            else:
+                print("No more pages to scrape.")
