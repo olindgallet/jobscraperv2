@@ -70,6 +70,8 @@ async def main(use_terminal, use_airtable):
 def execute():
     use_terminal = False
     use_airtable = False
+    use_csv = False
+    
     if '-a' not in sys.argv and '-t' not in sys.argv:
         Terminal.display_usage_help()
     else:    
