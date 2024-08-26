@@ -1,6 +1,17 @@
 # Job Scraper, Version 2
 A scraper for job sites done with Python and the Playwright library.
 
+# In the Works: Job Scraper Update 8/26/2024
+After receiving kind words and support, I've decided I want to update the scraper.  Here are the goals
+hoping to be reached around Labor Day:
+
+1.  Transition from command line parameters to JSON configurations.  Things that should change like
+location and job position are hard-coded, which makes it difficult for different needs to be met.
+2.  Include support for exporting to CSVs.  Credit to user lukegeel101 for the suggestion / code.
+3.  Get as many of the website scrapers working as possible.
+
+Right now the goal is to have it pull raw data from the sites.  No sort of processing and display will be added in this program at least.
+
 ### Why v2?  Is there an earlier version?
 The earlier version uses Selenium and has time delays to account for Javascript loads and rendering.  This version uses Playwright and properly "waits" for rendering rather than force a delay.  The program as a whole now runs faster; those unused seconds of waiting for rendering add up!  
 
