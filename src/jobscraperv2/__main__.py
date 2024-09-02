@@ -1,8 +1,14 @@
 """
 Author: Olin Gallet
+Date: 9/2/2024
+
+Shift from using terminal parameters to a json configuration.
+-
+Author: Olin Gallet
 Date: 6/11/2022
 
-Puts together the various scraping instructions for 
+Job Scraper v2 scrapes various job search websites and outputs it to
+different formats.   
 """
 
 from .websites.weworkremotelywebsite import WeWorkRemotelyWebsite as wwr
@@ -19,48 +25,17 @@ from .websites.observers.airtableasobserver import AirtableAsObserver
 from .websites.observers.terminalasobserver import TerminalAsObserver
 from .util.terminal import Terminal
 from .util.configfile import ConfigFile
+from typing import List
 import asyncio
 import sys
 
-async def main(use_terminal, use_airtable):
+async def main(cfg_data:List[str]):
     playwright = await async_playwright().start()
-    sites = [indeed(indeed.ANALYTICS_JOBS),
-             indeed(indeed.BUSINESS_ANALYST_JOBS),
-             indeed(indeed.DATA_ANALYST_JOBS),
-             indeed(indeed.DATA_SCIENTIST_JOBS),
-             indeed(indeed.DATA_ENGINEER_JOBS),
-             wwr(wwr.DATA_JOBS),
-             himalayas(himalayas.DATA_ANALYST_JOBS),
-             himalayas(himalayas.BUSINESS_ANALYST_JOBS),
-             himalayas(himalayas.DATA_SCIENTIST_JOBS),
-             himalayas(himalayas.ANALYTICS_JOBS),
-             himalayas(himalayas.DATA_ENGINEER_JOBS),
-             nowb(nowb.DATA_JOBS),
-             cb(cb.DAT_DATA_ANALYST_JOBS),
-             cb(cb.DAT_BUSINESS_ANALYST_JOBS),
-             cb(cb.DAT_ANALYTICS_JOBS),
-             cb(cb.DAT_DATA_SCIENTIST_JOBS),
-             cb(cb.DAT_DATA_ENGINEER_JOBS),
-             cb(cb.REL_DATA_ANALYST_JOBS),
-             cb(cb.REL_BUSINESS_ANALYST_JOBS),
-             cb(cb.REL_ANALYTICS_JOBS),
-             cb(cb.REL_DATA_SCIENTIST_JOBS),
-             cb(cb.REL_DATA_ENGINEER_JOBS),
-             zip(zip.DATA_ENGINEER_JOBS),
-             zip(zip.DATA_SCIENTIST_JOBS),
-             zip(zip.ANALYTICS_JOBS),
-             zip(zip.DATA_ANALYST_JOBS),
-             zip(zip.BUSINESS_ANALYST_JOBS),
-             monster(monster.DATA_ANALYST_JOBS),
-             monster(monster.ANALYTICS_JOBS),
-             monster(monster.BUSINESS_ANALYST_JOBS),
-             monster(monster.DATA_ENGINEER_JOBS),
-             monster(monster.DATA_SCIENTIST_JOBS)]
+    sites = [indeed(indeed.ANALYTICS_JOBS)]
     for site in sites:
         browser = None
         try:
             site.subscribe(TerminalAsObserver())
-            #site.subscribe(AirtableAsObserver())
             browser = await playwright.firefox.launch()  
             await site.scrape(browser)
             await browser.close()
@@ -84,7 +59,7 @@ def execute():
                 Terminal.display_attempting_scrape(sys.argv[1], cfg_data["position"], \
                                                    cfg_data["location"], \
                                                    cfg_data["engine"], cfg_data["output"])
-                #asyncio.run(main(use_terminal, use_airtable))
+                asyncio.run(main(cfg_data))
             except Exception as e:
                 Terminal.display_parse_error(sys.argv[1], e.message)
         else:
