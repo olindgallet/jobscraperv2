@@ -1,0 +1,4 @@
+*.pyc
+.venv
+build
+src/jobscraperv2.egg-info

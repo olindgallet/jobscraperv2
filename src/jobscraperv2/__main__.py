@@ -1,6 +1,10 @@
-# Author: Olin Gallet
-# Date: 6/11/2022
- 
+"""
+Author: Olin Gallet
+Date: 6/11/2022
+
+Puts together the various scraping instructions for 
+"""
+
 from .websites.weworkremotelywebsite import WeWorkRemotelyWebsite as wwr
 from .websites.indeedwebsite import IndeedWebsite as indeed
 from .websites.hitmarkerwebsite import HitMarkerWebsite as hitma
@@ -14,6 +18,7 @@ from playwright.async_api import async_playwright
 from .websites.observers.airtableasobserver import AirtableAsObserver
 from .websites.observers.terminalasobserver import TerminalAsObserver
 from .util.terminal import Terminal
+from .util.configfile import ConfigFile
 import asyncio
 import sys
 
@@ -54,10 +59,8 @@ async def main(use_terminal, use_airtable):
     for site in sites:
         browser = None
         try:
-            if use_terminal:
-                site.subscribe(TerminalAsObserver())
-            if use_airtable:
-                site.subscribe(AirtableAsObserver())
+            site.subscribe(TerminalAsObserver())
+            #site.subscribe(AirtableAsObserver())
             browser = await playwright.firefox.launch()  
             await site.scrape(browser)
             await browser.close()
@@ -68,18 +71,25 @@ async def main(use_terminal, use_airtable):
     await playwright.stop()
 
 def execute():
-    use_terminal = False
-    use_airtable = False
-    use_csv = False
-    
-    if '-a' not in sys.argv and '-t' not in sys.argv:
+    """
+    Attempts to execute the jobscraper with the provided configuration file location.
+    """
+    if len(sys.argv) != 2:
         Terminal.display_usage_help()
-    else:    
-        if '-a' in sys.argv:
-            use_airtable = True
-        if '-t' in sys.argv:
-            use_terminal = True
-        asyncio.run(main(use_terminal, use_airtable))
-
+    else:
+        cfg = ConfigFile(sys.argv[1])
+        if cfg.exists():
+            try:
+                cfg_data = cfg.parse()
+                Terminal.display_attempting_scrape(sys.argv[1], cfg_data["position"], \
+                                                   cfg_data["location"], \
+                                                   cfg_data["engine"], cfg_data["output"])
+                #asyncio.run(main(use_terminal, use_airtable))
+            except Exception as e:
+                Terminal.display_parse_error(sys.argv[1], e.message)
+        else:
+            Terminal.display_configuration_not_found_error(sys.argv[1], e.message)
+             
+    
 if __name__ == '__main__':
     execute()
