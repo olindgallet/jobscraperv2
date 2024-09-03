@@ -1,7 +1,10 @@
 # Job Scraper, Version 2
 A scraper for job sites done with Python and the Playwright library.
 
-# In the Works: Job Scraper Update 8/26/2024
+Job Scraper Update 9/3/2024
+Many of these job search websites now use Cloudflare to stop automation.  I'll have to research ways to circumvent it.
+
+Job Scraper Update 8/26/2024
 After receiving kind words and support, I've decided I want to update the scraper.  Here are the goals
 hoping to be reached around Labor Day:
 
