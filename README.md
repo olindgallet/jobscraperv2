@@ -1,3 +1,6 @@
+# JOB SCRAPER IS NOW ABANDONED
+Just don't have the time to work on it nowadays.  Keeping the project documentation and old code for reference.
+
 # Job Scraper, Version 2
 A scraper for job sites done with Python and the Playwright library.
 
